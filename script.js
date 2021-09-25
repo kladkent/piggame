@@ -110,31 +110,53 @@ const playerContinue = function (diceValue) {
   }
 };
 
+//alert user function
+
+const alertUser = function (player) {
+  alert(
+    `${player} - You cannot hold the current score of 0. Roll the dice first!`
+  );
+};
+
 //hold function
 
 const holdScore = function () {
   if (isScoreLess(playerOneScore, playerTwoScore)) {
     if (isPlayerActive(playerOne)) {
-      playerOneScore += playerOneCurrentScore;
-      displayTotalScore(playerOneTotalScoreElement, playerOneScore);
-      playerOneCurrentScore = 0;
-      displayCurrentScore(playerOneCurrentScoreElement, playerOneCurrentScore);
-      if (isScoreEnough(playerOneScore)) {
-        setWinner(playerOne);
+      if (playerOneCurrentScore !== 0) {
+        playerOneScore += playerOneCurrentScore;
+        displayTotalScore(playerOneTotalScoreElement, playerOneScore);
+        playerOneCurrentScore = 0;
+        displayCurrentScore(
+          playerOneCurrentScoreElement,
+          playerOneCurrentScore
+        );
+        if (isScoreEnough(playerOneScore)) {
+          setWinner(playerOne);
+        } else {
+          deactivatePlayer(playerOne);
+          activatePlayer(playerTwo);
+        }
       } else {
-        deactivatePlayer(playerOne);
-        activatePlayer(playerTwo);
+        alertUser("Player 1");
       }
     } else {
-      playerTwoScore += playerTwoCurrentScore;
-      displayTotalScore(playerTwoTotalScoreElement, playerTwoScore);
-      playerTwoCurrentScore = 0;
-      displayCurrentScore(playerTwoCurrentScoreElement, playerTwoCurrentScore);
-      if (isScoreEnough(playerTwoScore)) {
-        setWinner(playerTwo);
+      if (playerTwoCurrentScore !== 0) {
+        playerTwoScore += playerTwoCurrentScore;
+        displayTotalScore(playerTwoTotalScoreElement, playerTwoScore);
+        playerTwoCurrentScore = 0;
+        displayCurrentScore(
+          playerTwoCurrentScoreElement,
+          playerTwoCurrentScore
+        );
+        if (isScoreEnough(playerTwoScore)) {
+          setWinner(playerTwo);
+        } else {
+          deactivatePlayer(playerTwo);
+          activatePlayer(playerOne);
+        }
       } else {
-        deactivatePlayer(playerTwo);
-        activatePlayer(playerOne);
+        alertUser("Player 2");
       }
     }
   }
