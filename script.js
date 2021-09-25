@@ -20,7 +20,7 @@ const btnRollDice = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 
 //variables - dice element
-const imageDiceValue = document.querySelector(".dice");
+const diceElement = document.querySelector(".dice");
 
 //variables for current and total score for player 1
 const playerOneTotalScoreElement = document.querySelector("#score--0");
@@ -42,6 +42,7 @@ const players = document.querySelectorAll(".player");
 //roll the dice function
 
 const rollDice = function () {
+  showDice();
   if (isScoreLess(playerOneScore, playerTwoScore)) {
     const diceValue = Math.trunc(Math.random() * 6) + 1;
     displayDice(diceValue);
@@ -54,22 +55,22 @@ const rollDice = function () {
 const displayDice = function (dice) {
   switch (dice) {
     case 1:
-      imageDiceValue.src = "dice-1.png";
+      diceElement.src = "dice-1.png";
       break;
     case 2:
-      imageDiceValue.src = "dice-2.png";
+      diceElement.src = "dice-2.png";
       break;
     case 3:
-      imageDiceValue.src = "dice-3.png";
+      diceElement.src = "dice-3.png";
       break;
     case 4:
-      imageDiceValue.src = "dice-4.png";
+      diceElement.src = "dice-4.png";
       break;
     case 5:
-      imageDiceValue.src = "dice-5.png";
+      diceElement.src = "dice-5.png";
       break;
     case 6:
-      imageDiceValue.src = "dice-6.png";
+      diceElement.src = "dice-6.png";
       break;
     default:
       break;
@@ -179,6 +180,9 @@ const resetGame = function () {
   resetWinner(playerOne);
   resetWinner(playerTwo);
 
+  //hide dice
+  hideDice();
+
   //reset current/total scores to zero
   playerOneCurrentScore = 0;
   playerOneScore = 0;
@@ -189,10 +193,12 @@ const resetGame = function () {
 //add/remove classlist functions
 const activatePlayer = function (element) {
   element.classList.add("player--active");
+  hideDice();
 };
 
 const deactivatePlayer = function (element) {
   element.classList.remove("player--active");
+  hideDice();
 };
 
 const setWinner = function (element) {
@@ -223,7 +229,21 @@ const isScoreEnough = function (playerScore) {
   return playerScore >= 100;
 };
 
+const hideDice = function () {
+  diceElement.classList.add("hidden");
+};
+
+const showDice = function () {
+  diceElement.classList.remove("hidden");
+};
+
 ////////////////////////////////////////////////functions////////////////////////
+
+/////////////////////////////////initial state//////////////////////////////
+
+hideDice();
+
+////////////////////////////////initial state///////////////////////////////
 
 /////////////////////////////////////////////////DOM/////////////////////////////
 
